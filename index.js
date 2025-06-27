@@ -6,9 +6,13 @@ const { connectToDatabase } = require('./util/db')
 
 const blogsRouter = require('./controllers/blogs')
 
+const errorHandler = require('./middleware/error_handler')
+
 app.use(express.json())
 
 app.use('/api/blogs', blogsRouter)
+
+app.use(errorHandler)
 
 const start = async () => {
   await connectToDatabase()
@@ -18,3 +22,4 @@ const start = async () => {
 }
 
 start()
+
