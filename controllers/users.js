@@ -7,12 +7,13 @@ router.get('/', async (req, res) => {
   res.json(users)
 })
 
-router.post('/', async (req, res) => {
+router.post('/', async (req, res, next) => {
   try {
     const user = await User.create(req.body)
     res.json(user)
   } catch(error) {
-    return res.status(400).json({ error })
+    next(error)
+    // return res.status(400).json({ error })
   }
 })
 
@@ -21,9 +22,9 @@ router.put('/:username', async (req, res) => {
     where: {
       username: req.body.username
     }
-  }) //somehow find user with this username
+  })
   if (user) {
-    user.username = req.body.username //new username has to be passed in via req body
+    user.username = req.body.username
     await user.save()
     res.json(user)
   } else {
