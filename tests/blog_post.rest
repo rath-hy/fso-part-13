@@ -1,0 +1,11 @@
+### Create a new blog
+POST http://localhost:3001/api/blogs
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InB1dGh5cmF0aHlAZ21haWwuY29tIiwiaWQiOjIsImlhdCI6MTc1MTA3Njc1MH0.-y3sYYjEW4y0zjyMuldR_x3XCEh9iTeF8vClxwEie58
+
+{
+  "title": "I love Gina",
+  "author": "Puthyrath Hy",
+  "url": "https://example.com/test-blog",
+  "likes": 10
+}

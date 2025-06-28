@@ -1,15 +1,21 @@
 const router = require('express').Router()
-const { Blog } = require('../models')
+const { Blog, User } = require('../models')
+const tokenExtractor = require('../middleware/token_extractor')
 
 router.get('/', async (req, res) => {
-  const blogs = await Blog.findAll()
+  const blogs = await Blog.findAll({
+    include: {
+      model: User
+    }
+  })
   res.json(blogs)
 })
 
-router.post('/', async (req, res, next) => {
+router.post('/', tokenExtractor, async (req, res, next) => {
   console.log(req.body)
   try {
-    const blog = await Blog.create(req.body)
+    const user = await User.findByPk(req.decodedToken.id)
+    const blog = await Blog.create({...req.body, userId: user.id})
     return res.json(blog)
   } catch(error) {
     next(error)
@@ -33,12 +39,18 @@ router.put('/:id', async (req, res, next) => {
   }
 })
 
-router.delete('/:id', async (req, res) => {
-  const blog = await Blog.findByPk(req.params.id) 
-  if (blog) {
-    await note.destroy()
+router.delete('/:id', tokenExtractor, async (req, res, next) => {
+  try {
+    const user = await User.findByPk(req.decodedToken.id)
+    const blog = await Blog.findByPk(req.params.id) 
+
+    if (blog && blog.userId === user.id) {
+      await blog.destroy()
+      res.status(204).end()
+    }
+  } catch (error) {
+    next(error)
   }
-  res.status(204).end()
 })
 
 //for testing error handler
