@@ -1,2 +1,2 @@
-DELETE http://localhost:3001/api/blogs/5
+DELETE http://localhost:3001/api/blogs/4
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InB1dGh5cmF0aHlAZ21haWwuY29tIiwiaWQiOjIsImlhdCI6MTc1MTA3Njc1MH0.-y3sYYjEW4y0zjyMuldR_x3XCEh9iTeF8vClxwEie58
